@@ -1,15 +1,15 @@
-# terraform {
-#   required_providers {
-#     proxmox = {
-#       source = "bpg/proxmox"
-#       version = ">=0.46.1"
-#     }
-#     ansible = {
-#       version = ">=1.1.0"
-#       source  = "ansible/ansible"
-#   }
-# }
-# }
+terraform {
+  required_providers {
+    proxmox = {
+      source = "bpg/proxmox"
+      version = ">=0.46.1"
+    }
+  #   ansible = {
+  #     version = ">=1.1.0"
+  #     source  = "ansible/ansible"
+  # }
+}
+}
 
 resource "proxmox_virtual_environment_container" "this" {
   node_name = var.node_name
@@ -64,12 +64,10 @@ resource "proxmox_virtual_environment_container" "this" {
 
 
 # Used when template isn't set
-resource "proxmox_virtual_environment_file" "lxc-debian-12" {
+resource "proxmox_virtual_environment_download_file" "lxc-debian-12" {
   content_type = "vztmpl"
-  datastore_id = "local"
+  datastore_id = var.datastore_id
   node_name    = var.node_name
-  source_file {
-    path     =  "http://download.proxmox.com/images/system/debian-12-standard_12.2-1_amd64.tar.zst"
-    insecure =  "true"
-  }
+  url     =  "https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.tar.xz"
+  overwrite =  "true"
 }
