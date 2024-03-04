@@ -53,7 +53,7 @@ resource "proxmox_virtual_environment_container" "this" {
 
   operating_system {
     # Template equals the first non-null argument provided (template passed via input -> default template)
-    template_file_id = coalesce(var.template_file_id, proxmox_virtual_environment_file.lxc-debian-12.id)
+    template_file_id = coalesce(var.template_file_id, proxmox_virtual_environment_download_file.lxc-debian-12.id)
     type             = var.os_type
   }
 
